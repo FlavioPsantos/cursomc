@@ -14,6 +14,7 @@ import com.example.demo.domain.Cliente;
 import com.example.demo.domain.Endereco;
 import com.example.demo.domain.Estado;
 import com.example.demo.domain.EstadoPagamento;
+import com.example.demo.domain.ItemPedido;
 import com.example.demo.domain.Pagamento;
 import com.example.demo.domain.PagamentoComBoleto;
 import com.example.demo.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.example.demo.repositorie.CidadeRepository;
 import com.example.demo.repositorie.ClienteRepository;
 import com.example.demo.repositorie.EnderecoRepository;
 import com.example.demo.repositorie.EstadoRepository;
+import com.example.demo.repositorie.ItemPedidoRepository;
 import com.example.demo.repositorie.PagamentoRepository;
 import com.example.demo.repositorie.PedidoRepository;
 import com.example.demo.repositorie.ProdutoRepository;
@@ -48,6 +50,9 @@ public class MyfirstprojectApplication implements CommandLineRunner {
 	private PagamentoRepository pagamentoRepository;
 	@Autowired
 	private PedidoRepository pedidoRepository;
+	@Autowired
+	private ItemPedidoRepository ItemPedidoRepository;
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(MyfirstprojectApplication.class, args);
@@ -95,8 +100,17 @@ public class MyfirstprojectApplication implements CommandLineRunner {
 		ped2.setPagamento(pagto2);
 		
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
-		
-		
+		 ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		 ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 3, 80.00);
+		 ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 2, 800.00);
+		 
+		 ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		 ped2.getItens().addAll(Arrays.asList(ip3));
+		 
+		 p1.getItens().addAll(Arrays.asList(ip1));
+		 p2.getItens().addAll(Arrays.asList(ip3));
+		 p3.getItens().addAll(Arrays.asList(ip2));
+		 
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
@@ -105,6 +119,7 @@ public class MyfirstprojectApplication implements CommandLineRunner {
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
+		ItemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 		 
 	}
 
